@@ -111,7 +111,6 @@ while i <= len(mon):
 - Создайть на сцене Unity пустой GameObject и подключить к нему .cs скрипт, в котором описывается подключение к google-таблице по API и воспроизведение звуков в игре
 - Подключить файлы для воспроизведения
 
-***ИЗМЕНИТЬ КОД***
 ```cs
 using System.Collections;
 using System.Collections.Generic;
@@ -122,7 +121,6 @@ using SimpleJSON;
 public class NewBehaviourScript : MonoBehaviour
 {
     public AudioClip goodSpeak;
-    public AudioClip normalSpeak;
     public AudioClip badSpeak;
     private AudioSource selectAudio;
     private Dictionary<string,float> dataSet = new Dictionary<string, float>();
@@ -138,19 +136,14 @@ public class NewBehaviourScript : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (dataSet["Mon_" + i.ToString()] <= 10 & statusStart == false & i != dataSet.Count)
+        if (dataSet["Mon_" + i.ToString()] >= 0 & statusStart == false & i != dataSet.Count)
         {
             StartCoroutine(PlaySelectAudioGood());
             Debug.Log(dataSet["Mon_" + i.ToString()]);
         }
 
-        if (dataSet["Mon_" + i.ToString()] > 10 & dataSet["Mon_" + i.ToString()] < 100 & statusStart == false & i != dataSet.Count)
-        {
-            StartCoroutine(PlaySelectAudioNormal());
-            Debug.Log(dataSet["Mon_" + i.ToString()]);
-        }
 
-        if (dataSet["Mon_" + i.ToString()] >= 100 & statusStart == false & i != dataSet.Count)
+        if (dataSet["Mon_" + i.ToString()] < 0 & statusStart == false & i != dataSet.Count)
         {
             StartCoroutine(PlaySelectAudioBad());
             Debug.Log(dataSet["Mon_" + i.ToString()]);
@@ -159,7 +152,7 @@ public class NewBehaviourScript : MonoBehaviour
 
     IEnumerator GoogleSheets()
     {
-        UnityWebRequest curentResp = UnityWebRequest.Get("https://sheets.googleapis.com/v4/spreadsheets/1CEjtCsGKu_fHyNkAAnhjj7Op5AObTqc0w-XotEF8bTI/values/Лист1?key=AIzaSyASnu9QXtSW-cHLv__q0mYZNbbhJUFUgdM");
+        UnityWebRequest curentResp = UnityWebRequest.Get("https://sheets.googleapis.com/v4/spreadsheets/1A6Eftcj_AYvhpNMqOPegh-c3ze1ZvSYu0zBOJB8mqWw/values/Лист1?key=AIzaSyDMl6ehKmc1V0Y-epXRxR5EJokJuzer0ig");
         yield return curentResp.SendWebRequest();
         string rawResp = curentResp.downloadHandler.text;
         var rawJson = JSON.Parse(rawResp);
@@ -177,17 +170,7 @@ public class NewBehaviourScript : MonoBehaviour
         selectAudio = GetComponent<AudioSource>();
         selectAudio.clip = goodSpeak;
         selectAudio.Play();
-        yield return new WaitForSeconds(3);
-        statusStart = false;
-        i++;
-    }
-    IEnumerator PlaySelectAudioNormal()
-    {
-        statusStart = true;
-        selectAudio = GetComponent<AudioSource>();
-        selectAudio.clip = normalSpeak;
-        selectAudio.Play();
-        yield return new WaitForSeconds(3);
+        yield return new WaitForSeconds(2);
         statusStart = false;
         i++;
     }
@@ -197,7 +180,7 @@ public class NewBehaviourScript : MonoBehaviour
         selectAudio = GetComponent<AudioSource>();
         selectAudio.clip = badSpeak;
         selectAudio.Play();
-        yield return new WaitForSeconds(4);
+        yield return new WaitForSeconds(3);
         statusStart = false;
         i++;
     }
