@@ -38,92 +38,64 @@
 Попробовать поработать с балансом в играх
 
 ## Задание 1
-### Пошагово выполнить каждый пункт раздела "ход работы" с описанием и примерами реализации задач
-Ход работы:
-- Произвести подготовку данных для работы с алгоритмом линейной регрессии. 10 видов данных были установлены случайным образом, и данные находились в линейной зависимости. Данные преобразуются в формат массива, чтобы их можно было вычислить напрямую при использовании умножения и сложения.
+### Предложите вариант изменения найденных переменных для 10 уровней в игре. Визуализируйте изменение уровня сложности в таблице. 
+Тут будет картинка
 
-```py
-
-In [ ]:
-#Import the required modules, numpy for calculation, and Matplotlib for drawing
-import numpy as np
-import matplotlib.pyplot as plt
-#This code is for jupyter Notebook only
-%matplotlib inline
-
-# define data, and change list to array
-x = [3,21,22,34,54,34,55,67,89,99]
-x = np.array(x)
-y = [2,22,24,65,79,82,55,130,150,199]
-y = np.array(y)
-
-#Show the effect of a scatter plot
-plt.scatter(x,y)
-
-```
-
-- Определите связанные функции. Функция модели: определяет модель линейной регрессии wx+b. Функция потерь: функция потерь среднеквадратичной ошибки. Функция оптимизации: метод градиентного спуска для нахождения частных производных w и b.
-
+[Google-таблица](https://docs.google.com/spreadsheets/d/1ZV2iGYohyuk1tDYHWW_fU5aDSWaMLVhsakeK2r1QRmo/edit?usp=sharing)
 
 ## Задание 2
-### Должна ли величина loss стремиться к нулю при изменении исходных данных? Ответьте на вопрос, приведите пример выполнения кода, который подтверждает ваш ответ.
+### Создайте 10 сцен на Unity с изменяющимся уровнем сложности.
 
-- Перечисленные в этом туториале действия могут быть выполнены запуском на исполнение скрипт-файла, доступного [в репозитории](https://github.com/Den1sovDm1triy/hfss-scripting/blob/main/ScreatingSphereInAEDT.py).
-- Для запуска скрипт-файла откройте Ansys Electronics Desktop. Перейдите во вкладку [Automation] - [Run Script] - [Выберите файл с именем ScreatingSphereInAEDT.py из репозитория].
-
-```py
-
-import ScriptEnv
-ScriptEnv.Initialize("Ansoft.ElectronicsDesktop")
-oDesktop.RestoreWindow()
-oProject = oDesktop.NewProject()
-oProject.Rename("C:/Users/denisov.dv/Documents/Ansoft/SphereDIffraction.aedt", True)
-oProject.InsertDesign("HFSS", "HFSSDesign1", "HFSS Terminal Network", "")
-oDesign = oProject.SetActiveDesign("HFSSDesign1")
-oEditor = oDesign.SetActiveEditor("3D Modeler")
-oEditor.CreateSphere(
-	[
-		"NAME:SphereParameters",
-		"XCenter:="		, "0mm",
-		"YCenter:="		, "0mm",
-		"ZCenter:="		, "0mm",
-		"Radius:="		, "1.0770329614269mm"
-	], 
-)
-
-```
+Тут будет картинка
 
 ## Задание 3
-### Какова роль параметра Lr? Ответьте на вопрос, приведите пример выполнения кода, который подтверждает ваш ответ. В качестве эксперимента можете изменить значение параметра.
+### Решение в 80+ баллов должно визуализировать данные из google-таблицы, и с помощью Python передавать в проект Unity. В Python данные также должны быть визуализированы.
 
-- Перечисленные в этом туториале действия могут быть выполнены запуском на исполнение скрипт-файла, доступного [в репозитории](https://github.com/Den1sovDm1triy/hfss-scripting/blob/main/ScreatingSphereInAEDT.py).
-- Для запуска скрипт-файла откройте Ansys Electronics Desktop. Перейдите во вкладку [Automation] - [Run Script] - [Выберите файл с именем ScreatingSphereInAEDT.py из репозитория].
+Не уверена что правильно поняла задание, сделала в этой практике как во втором воркшопе и заполнила таблицу с помощью Python
+Как передавать данные по уровням не разобралась.
 
 ```py
 
-import ScriptEnv
-ScriptEnv.Initialize("Ansoft.ElectronicsDesktop")
-oDesktop.RestoreWindow()
-oProject = oDesktop.NewProject()
-oProject.Rename("C:/Users/denisov.dv/Documents/Ansoft/SphereDIffraction.aedt", True)
-oProject.InsertDesign("HFSS", "HFSSDesign1", "HFSS Terminal Network", "")
-oDesign = oProject.SetActiveDesign("HFSSDesign1")
-oEditor = oDesign.SetActiveEditor("3D Modeler")
-oEditor.CreateSphere(
-	[
-		"NAME:SphereParameters",
-		"XCenter:="		, "0mm",
-		"YCenter:="		, "0mm",
-		"ZCenter:="		, "0mm",
-		"Radius:="		, "1.0770329614269mm"
-	], 
-)
+import gspread
+import numpy as np
+gc = gspread.service_account(filename='dragonpickerbalance-bcaaf2fa88cb.json')
+sh = gc.open("DragonPickerBalance_Workshop3")
+letters = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L']
+speed = 4.0
+deltaSpeed = 1.1
+time = 2.0
+deltaTime = 0.9
+distance = 10.0
+deltaDistance = 1.05
+i = 0
+
+def newValue(a, delta):
+  a = a*delta
+  a = round(a, 1)
+  a = str(a)
+  return a.replace('.',',')
+    
+while i < len(letters)-1:
+    i += 1
+    if i == 0 or i == 1:
+        continue
+    else:
+        speedNew = newValue(speed, deltaSpeed)
+        speed = speed*deltaSpeed
+        timeNew = newValue(time, deltaTime)
+        time = time*deltaTime
+        distanceNew = newValue(distance, deltaDistance)
+        distance = distance*deltaDistance
+        sh.sheet1.update((letters[i] + str(2)), speedNew)
+        sh.sheet1.update((letters[i] + str(3)), timeNew)
+        sh.sheet1.update((letters[i] + str(4)), distanceNew)
+        print(speedNew)
 
 ```
 
 ## Выводы
 
-Абзац умных слов о том, что было сделано и что было узнано.
+Абзац умных слов о том, что в ходе работы я узнала о способах настройки баланса в играх и попробовала сделать 10 уровней с постепенно нарастающей сложностью.
 
 | Plugin | README |
 | ------ | ------ |
