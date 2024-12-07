@@ -39,8 +39,7 @@
 
 ## Задание 1
 ### Предложите вариант изменения найденных переменных для 10 уровней в игре. Визуализируйте изменение уровня сложности в таблице. 
-Тут будет картинка
-
+![](assets/Google-Tabs.png)
 [Google-таблица](https://docs.google.com/spreadsheets/d/1ZV2iGYohyuk1tDYHWW_fU5aDSWaMLVhsakeK2r1QRmo/edit?usp=sharing)
 
 ## Задание 2
